@@ -1,25 +1,21 @@
 /*
-Задание 1 Проанализировать структуру БД vk с помощью скрипта, который мы 
-создали на занятии (les-3.sql), и внести предложения по усовершенствованию 
-(если такие идеи есть). Создайте у себя БД vk с помощью скрипта из материалов урока. 
-Напишите пожалуйста, всё ли понятно по структуре.
+Р—Р°РґР°РЅРёРµ 1 РџСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°С‚СЊ СЃС‚СЂСѓРєС‚СѓСЂСѓ Р‘Р” vk СЃ РїРѕРјРѕС‰СЊСЋ СЃРєСЂРёРїС‚Р°, РєРѕС‚РѕСЂС‹Р№ РјС‹ 
+СЃРѕР·РґР°Р»Рё РЅР° Р·Р°РЅСЏС‚РёРё (les-3.sql), Рё РІРЅРµСЃС‚Рё РїСЂРµРґР»РѕР¶РµРЅРёСЏ РїРѕ СѓСЃРѕРІРµСЂС€РµРЅСЃС‚РІРѕРІР°РЅРёСЋ 
+(РµСЃР»Рё С‚Р°РєРёРµ РёРґРµРё РµСЃС‚СЊ). РЎРѕР·РґР°Р№С‚Рµ Сѓ СЃРµР±СЏ Р‘Р” vk СЃ РїРѕРјРѕС‰СЊСЋ СЃРєСЂРёРїС‚Р° РёР· РјР°С‚РµСЂРёР°Р»РѕРІ СѓСЂРѕРєР°. 
+РќР°РїРёС€РёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РІСЃС‘ Р»Рё РїРѕРЅСЏС‚РЅРѕ РїРѕ СЃС‚СЂСѓРєС‚СѓСЂРµ.
 
-Предложений нет.
+РџСЂРµРґР»РѕР¶РµРЅРёР№ РЅРµС‚.
 */
 
 
 /*
-Задание 2 Придумать 2-3 таблицы для БД vk, которую мы создали на занятии 
-(с перечнем полей, указанием индексов и внешних ключей).
-
-
-
+Р—Р°РґР°РЅРёРµ 2 РџСЂРёРґСѓРјР°С‚СЊ 2-3 С‚Р°Р±Р»РёС†С‹ РґР»СЏ Р‘Р” vk, РєРѕС‚РѕСЂСѓСЋ РјС‹ СЃРѕР·РґР°Р»Рё РЅР° Р·Р°РЅСЏС‚РёРё 
+(СЃ РїРµСЂРµС‡РЅРµРј РїРѕР»РµР№, СѓРєР°Р·Р°РЅРёРµРј РёРЅРґРµРєСЃРѕРІ Рё РІРЅРµС€РЅРёС… РєР»СЋС‡РµР№).
 
 */
-
 USE vk ;
 
--- Создаем таблицу с черным списком
+-- РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ СЃ С‡РµСЂРЅС‹Рј СЃРїРёСЃРєРѕРј
 CREATE TABLE IF NOT EXISTS black_list(
 	from_user_id BIGINT UNSIGNED NOT NULL,
 	to_user_id BIGINT UNSIGNED NOT NULL,
@@ -28,31 +24,28 @@ CREATE TABLE IF NOT EXISTS black_list(
 	INDEX fk_black_lists_from_user_id_idx(from_user_id),
 	INDEX fk_black_list_to_user_id_idx(to_user_id),
 	CONSTRAINT fk_black_list_users_1 FOREIGN KEY (from_user_id) REFERENCES users(id),
-	CONSTRAINT fk_black_list_users_2 FOREIGN KEY (to_user_id) REFERENCES users(id),
+	CONSTRAINT fk_black_list_users_2 FOREIGN KEY (to_user_id) REFERENCES users(id)
 );
 
--- Создаем таблицу с лайками.
+-- РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ СЃ Р»Р°Р№РєР°РјРё.
 CREATE TABLE IF NOT EXISTS likes (
 	from_user_id BIGINT UNSIGNED,
 	to_like_user bigint UNSIGNED,
 	accepted boolean DEFAULT FALSE,
 	PRIMARY KEY (from_user_id, to_like_user),
 	CONSTRAINT fk_likes_users_from_user_id FOREIGN KEY (from_user_id) REFERENCES users(id),
-	CONSTRAINT fk_likes_users_to_like_user FOREIGN KEY (to_like_user) REFERENCES media(id),
+	CONSTRAINT fk_likes_users_to_like_user FOREIGN KEY (to_like_user) REFERENCES media(id)
 ); 
 
--- Создаем таблицу репостов.
+-- РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ СЂРµРїРѕСЃС‚РѕРІ.
 
 CREATE TABLE IF NOT EXISTS repostet (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	from_user BIGINT UNSIGNED,
-	to_whom_repost BIGINT UNSIGNED,
-	text_repost text DEFAULT NULL,
-	media_repost bigint UNSIGNED, 
+	to_whom_repost BIGINT UNSIGNED, -- РЇ РёРјРµСЋ РІРІРёРґСѓ РєРѕРјСѓ РёРґРµС‚ СЂРµРїРѕСЃС‚ РЅР° СЃРІРѕСЋ СЃС‚РµРЅСѓ РёР»Рё РЅР° СЃС‚РµРЅСѓ РґСЂСѓРіРѕРјСѓ С‡РµР»РѕРІРµРєСѓ.
+	text_repost text DEFAULT NULL, -- Р’РѕС‚ РїРѕ Р»РѕРіРёРєРµ РЅСѓР¶РЅРѕ С‡С‚Рѕ Р±С‹ СЃС‚СЂРѕС‡РєР° С‚РµРєСЃС‚Р° РёР»Рё РјРµРґРёР° РєС‚Рѕ С‚Рѕ РёРјРµР» РєР°РєРѕРµ С‚Рѕ Р·РЅР°С‡РµРЅРёРµ 
+	media_repost bigint UNSIGNED DEFAULT NULL, 
 	CONSTRAINT fk_repostet_from_user FOREIGN KEY (from_user) REFERENCES users(id),
 	CONSTRAINT fk_repostet_to_whom_repost FOREIGN KEY (to_whom_repost) REFERENCES users(id),
-	CONSTRAINT fk_repostet_media_repost FOREIGN KEY (media_repost) REFERENCES media(id),
+	CONSTRAINT fk_repostet_media_repost FOREIGN KEY (media_repost) REFERENCES media(id)
 );
-
-
-
