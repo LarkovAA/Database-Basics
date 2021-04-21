@@ -202,7 +202,8 @@ SELECT * FROM catalogs;
 
 SELECT p.name, c.name 
 FROM products AS p
-	JOIN catalogs c ON c.id = p.catalog_id 
+	LEFT JOIN catalogs c ON c.id = p.catalog_id 
+GROUP BY c.name
 ;
 
 
