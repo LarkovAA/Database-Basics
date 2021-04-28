@@ -23,7 +23,7 @@ CREATE TRIGGER add_values_to_the_archive_users AFTER INSERT ON users
 FOR EACH ROW
 BEGIN 
 	INSERT INTO logs (date_creation, table_name, id, title_content) VALUES
-	(NEW.created_at, 'users', NEW.id, NEW.name);
+	(NEW.created_at, 'users', NEW.id, NEW.name); -- Почему то тут еще ошибка синтактическая
 END //
 DELIMITER ;
 
@@ -34,7 +34,7 @@ CREATE TRIGGER add_values_to_the_archive_catalogs AFTER INSERT ON catalogs
 FOR EACH ROW
 BEGIN 
 	INSERT INTO logs (date_creation, table_name, id, title_content) VALUES
-	(now(), 'catalogs', NEW.id, NEW.name);
+	(now(), 'catalogs', NEW.id, NEW.name); -- Почему то тут еще ошибка синтактическая
 END //
 DELIMITER ;
 
@@ -45,11 +45,11 @@ CREATE TRIGGER add_values_to_the_archive_products AFTER INSERT ON products
 FOR EACH ROW
 BEGIN 
 	INSERT INTO logs (date_creation, table_name, id, title_content) VALUES
-	(NEW.created_at, 'products', NEW.id, NEW.name);
+	(NEW.created_at, 'products', NEW.id, NEW.name); -- Почему то тут еще ошибка синтактическая
 END //
 DELIMITER ;
 
--- Проверить не могу работает или нет. Делимитер не работает.
+-- Проверить не могу не создаються из за ошибок триггеры
 
 /*
  * Задание 2. Создайте SQL-запрос, который помещает в таблицу users миллион записей.
@@ -65,8 +65,9 @@ CREATE PROCEDURE millón_registros()
 BEGIN
 	DECLARE i INT DEFAULT 1; -- теперь тут синиактическая ошибка. Я не понимаю почему ??????
 	WHILE i < 1000001
-	INSERT INTO tabl_2 (name, create_at) VALUES (concat('user_',i)
-	
+		INSERT INTO tabl_2 (name, create_at) VALUES (concat('user_',i);
+		SET i = i + 1;
+	END WHILE;
 END //
 DELIMITER ;
 
