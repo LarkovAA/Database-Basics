@@ -1,3 +1,6 @@
+
+
+-- Немогу сделать CONSTRAINT из этих таблиц
 CREATE TABLE login_details(
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- id созданного пользователя
 	mail varchar(255) NOT NULL, -- e-mail пользователя 
@@ -17,4 +20,22 @@ CREATE TABLE photos(
 	image_format ENUM('JPEG', 'EPS', 'PNG', 'SVG') NOT NULL, -- формат фото 
 	date_of_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, -- когда была загружена
 	CONSTRAINT fr_photos_who_posted_login_details FOREIGN     KEY (who_posted) REFERENCES login_details (id)
+);
+
+
+
+
+-- Немогу сделать CONSTRAINT из этих таблиц
+CREATE TABLE picture(
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- id изображения мема
+	name_picture VARCHAR(255) NOT NULL, -- название картинки
+	image_format ENUM('JPEG', 'GIF', 'EPS', 'PNG', 'SVG') NOT NULL -- формат картинки
+);
+
+CREATE TABLE memes(
+	id_memes INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, -- id мема
+	id_picture INT NOT NULL, -- id изображения из какого сделан мем
+	type_meme ENUM('абстрактные', 'с животными', 'исторические', 'демотиваторы', 'классические', 'мертвые', 'современные', 'эпичные фразы', 'фотожаба', 'локальные', 'музыкальные') NOT NULL, -- тип мема
+	meme_structure ENUM('двусоставной ', 'персонажный', 'синтаксический ', 'ситуативный ', 'компаративный ') NOT NULL, -- структура мема
+	CONSTRAINT fk_memes_picture FOREIGN KEY (id_picture) REFERENCES picture (id)
 );
